@@ -22,8 +22,10 @@ module Knapsack
     end
 
     def open
-      report = File.read(report_path)
-      JSON.parse(report)
+      Dir.chdir(ENV['KNAPSACK_REPORT_DIR']) do
+        report = File.read(report_path)
+        JSON.parse(report)
+      end
     rescue Errno::ENOENT
       raise "Knapsack report file #{report_path} doesn't exist. Please generate report first!"
     end

@@ -30,8 +30,10 @@ module Knapsack
       def bind_report_generator
         ::RSpec.configure do |config|
           config.after(:suite) do
-            Knapsack.report.save
-            Knapsack.logger.info(Presenter.report_details)
+            Dir.chdir(ENV['KNAPSACK_REPORT_DIR']) do
+              Knapsack.report.save
+              Knapsack.logger.info(Presenter.report_details)
+            end
           end
         end
       end
